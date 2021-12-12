@@ -9,6 +9,8 @@ if [[ -z $mail ]]; then
     echo "Please input mail." 
     exit  
 fi
+cmd="nohup $bin -l $mail >/dev/null 2>&1 &"
+
 if [[ -z $(command -v /bin/p2pclient) ]];then
     url="https://github.com/haoduck/files/raw/main/p2pclient-upx"
     # bin="/bin/p2pclient"
@@ -31,13 +33,11 @@ if [[ -z $(command -v /bin/p2pclient) ]];then
         wget -q $url -O $bin
     fi
     chmod +x $bin
-    $bin -l $mail
+    $cmd
 else
     chmod +x $bin
-    $bin -l $mail
+    $cmd
 fi
-
-cmd="nohup $bin -l $mail >/dev/null 2>&1 &"
 
 if [[ -f $HOME/.bashrc ]];then
     if [[ -z "$(cat $HOME/.bashrc|grep $bin)" ]];then
